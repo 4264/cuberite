@@ -28,7 +28,7 @@ class cHeiGenCache :
 	public cTerrainHeightGen
 {
 public:
-	cHeiGenCache(cTerrainHeightGenPtr a_HeiGenToCache, int a_CacheSize);
+	cHeiGenCache(cTerrainHeightGenPtr a_HeiGenToCache, size_t a_CacheSize);
 	~cHeiGenCache();
 	
 	// cTerrainHeightGen overrides:
@@ -49,8 +49,8 @@ protected:
 	cTerrainHeightGenPtr m_HeiGenToCache;
 	
 	// To avoid moving large amounts of data for the MRU behavior, we MRU-ize indices to an array of the actual data
-	int          m_CacheSize;
-	int *        m_CacheOrder;  // MRU-ized order, indices into m_CacheData array
+	size_t       m_CacheSize;
+	size_t *     m_CacheOrder;  // MRU-ized order, indices into m_CacheData array
 	sCacheData * m_CacheData;   // m_CacheData[m_CacheOrder[0]] is the most recently used
 	
 	// Cache statistics

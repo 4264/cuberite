@@ -102,10 +102,10 @@ void cHeiGenFlat::InitializeHeightGen(cIniFile & a_IniFile)
 ////////////////////////////////////////////////////////////////////////////////
 // cHeiGenCache:
 
-cHeiGenCache::cHeiGenCache(cTerrainHeightGenPtr a_HeiGenToCache, int a_CacheSize) :
+cHeiGenCache::cHeiGenCache(cTerrainHeightGenPtr a_HeiGenToCache, size_t a_CacheSize) :
 	m_HeiGenToCache(a_HeiGenToCache),
 	m_CacheSize(a_CacheSize),
-	m_CacheOrder(new int[a_CacheSize]),
+	m_CacheOrder(new size_t[a_CacheSize]),
 	m_CacheData(new sCacheData[a_CacheSize]),
 	m_NumHits(0),
 	m_NumMisses(0),
@@ -155,7 +155,7 @@ void cHeiGenCache::GenHeightMap(int a_ChunkX, int a_ChunkZ, cChunkDef::HeightMap
 			continue;
 		}
 		// Found it in the cache
-		int Idx = m_CacheOrder[i];
+		auto Idx = m_CacheOrder[i];
 		
 		// Move to front:
 		for (int j = i; j > 0; j--)
@@ -177,8 +177,8 @@ void cHeiGenCache::GenHeightMap(int a_ChunkX, int a_ChunkZ, cChunkDef::HeightMap
 	m_HeiGenToCache->GenHeightMap(a_ChunkX, a_ChunkZ, a_HeightMap);
 	
 	// Insert it as the first item in the MRU order:
-	int Idx = m_CacheOrder[m_CacheSize - 1];
-	for (int i = m_CacheSize - 1; i > 0; i--)
+	auto Idx = m_CacheOrder[m_CacheSize - 1];
+	for (auto i = m_CacheSize - 1; i > 0; i--)
 	{
 		m_CacheOrder[i] = m_CacheOrder[i - 1];
 	}  // for i - m_CacheOrder[]
